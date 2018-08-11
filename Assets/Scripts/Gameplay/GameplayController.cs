@@ -10,7 +10,7 @@ public class GameplayController : MonoBehaviour {
     public int level, score, idolCode;
     public Sprite[] spriteIdolArr;
 
-    public GameObject menuPanel, resultPanel, resumeButton, exitButton, pauseButton, iDolObj;
+    public GameObject menuPanel, resultPanel, settingPanel, resumeButton, exitButton, pauseButton, iDolObj;
     private Image idolImg;
     [SerializeField]
     private Text textScore, textLevel, resultTitleText;
@@ -35,10 +35,10 @@ public class GameplayController : MonoBehaviour {
         this.idolImg.sprite = spriteIdolArr[(this.idolCode*10+(this.level - 1)%10)];
     }
 
-    
 
     public void increaseScore()
     {
+        
         this.score++;
         if (this.score % 5 == 0)
         {
@@ -47,10 +47,11 @@ public class GameplayController : MonoBehaviour {
             itemSpeed++;
         }
         this.textScore.text = this.score.ToString();
-        if (score % 3 == 0)
+        if (score % 15 == 0)
             this.levelUp();
         else
             SoundController.instance.playSoundScorelUp();
+        
     }
 
     public void levelUp() {
@@ -75,10 +76,13 @@ public class GameplayController : MonoBehaviour {
         Debug.Log("time scale 1");
     }
     public void showGameoverPanel(){
+        SoundController.instance.playSoundBreak();
+        SoundController.instance.playSoundGameOver();
         this.showPanel(resultPanel, resultTitleText, "Gameover!");
     }
 
     public void showVictoryPanel(){
+        SoundController.instance.playSoundVictory();
         this.showPanel(resultPanel, resultTitleText, "Victory!");
     }
 
@@ -87,7 +91,17 @@ public class GameplayController : MonoBehaviour {
         panel.SetActive(true);
         textObj.text = titleStr;
     }
-
+    public void closeSettingPanel()
+    {
+        SoundController.instance.playSoundButtonClicked();
+        settingPanel.SetActive(false);
+    }
+    public void showPanel(GameObject panel)
+    {
+        SoundController.instance.playSoundButtonClicked();
+        panel.SetActive(true);
+        Time.timeScale = 0f;
+    }
     /*Clicked Button*/
     public void clickPauseButton()
     {

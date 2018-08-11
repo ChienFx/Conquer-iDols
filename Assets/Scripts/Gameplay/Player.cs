@@ -17,9 +17,9 @@ public class Player : MonoBehaviour {
         Vector3 bound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
         playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
         playerHeight = GetComponent<SpriteRenderer>().bounds.size.y;
-        
+        Debug.Log("player size:" + playerWidth + ", " + playerHeight);
         minX = -bound.x; // -400
-        maxX = 2*bound.y+ minX;// + Screen.height; //80
+        maxX = 2*bound.y+ minX+0.3f;// + Screen.height; //80
         
         lineY = -bound.y + playerHeight / 2;//fixed
         
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
     void Update(){
         Vector3 curPos = transform.position;
         //Debug.Log("mouse X: " + Input.mousePosition.x / Screen.width);
-        if(Input.mousePosition.x/Screen.width > maxX-1.06f || Time.timeScale == 0)//pause 
+        if(Input.mousePosition.x/Screen.width > maxX-1.3f || Time.timeScale == 0)//pause 
             Cursor.visible = true;
         else
             Cursor.visible = false;
