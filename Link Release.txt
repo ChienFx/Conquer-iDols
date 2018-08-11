@@ -1,1 +1,2 @@
-https://drive.google.com/open?id=1Rf7snqeaKjsTF1RTUv47jgl1XlTtFCGw
+beta: https://drive.google.com/open?id=1Rf7snqeaKjsTF1RTUv47jgl1XlTtFCGw
+v1	: https://drive.google.com/open?id=1okJ5q8D-LF2pimwYAtkNw1J3l1xml9vC
