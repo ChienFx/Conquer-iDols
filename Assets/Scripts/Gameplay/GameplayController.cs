@@ -7,18 +7,19 @@ public class GameplayController : MonoBehaviour {
     public static GameplayController instance;
 
     public float playerSpeed, itemSpeed, gameSpeed;
-    public int level, score, idolCode;
+    public int level, score, idolCode, count;
     public Sprite[] spriteIdolArr;
 
-    public GameObject menuPanel, resultPanel, settingPanel, resumeButton, exitButton, pauseButton, iDolObj;
+    public GameObject menuPanel, resultPanel, settingPanel, resumeButton, exitButton, pauseButton, iDolObj, coundownPanel;
     private Image idolImg;
     [SerializeField]
-    private Text textScore, textLevel, resultTitleText;
+    private Text textScore, textLevel, resultTitleText, countdownText;
 
     private void Awake() {
         MakeInstance();
         level = 1;
         score = 0;
+		count = 0;
         idolCode = 0;
         gameSpeed = 1f;//normal
         idolImg = iDolObj.GetComponent<Image>();
@@ -38,51 +39,46 @@ public class GameplayController : MonoBehaviour {
 
     public void increaseScore()
     {
-        
-        this.score++;
+        SoundEffectController.instance.playSoundScorelUp();
+        this.score++; this.count++;
         if (this.score % 5 == 0)
         {
-            gameSpeed += 0.05f;
-            Time.timeScale = this.gameSpeed;
-            itemSpeed++;
+            gameSpeed += 0.03f;
+            itemSpeed += 0.1f;
         }
         this.textScore.text = this.score.ToString();
-        if (score % 15 == 0)
-            this.levelUp();
-        else
-            SoundController.instance.playSoundScorelUp();
-        
+        if (score % (level*(level+1)*10) == 0)
+            this.levelUp();       
     }
 
     public void levelUp() {
-        SoundController.instance.playSoundLevelUp();
+        SoundEffectController.instance.playSoundLevelUp();
         this.level++;
-        this.playerSpeed+=5;
-        this.itemSpeed+=2;
-        this.gameSpeed += 0.1f;
-        Time.timeScale = this.gameSpeed;
+        this.itemSpeed+=0.5f;
+        this.gameSpeed += 0.05f;
         this.textLevel.text = this.level.ToString();
 
         if (this.level == 11){
             showVictoryPanel();
         }
+		
     }
 
     public void restartGame(){
         this.score = 0;
         this.level = 1;
         gameSpeed = 1f;//normal speed
-        Time.timeScale = gameSpeed;
-        Debug.Log("time scale 1");
+        Time.timeScale = 1f;
+
     }
     public void showGameoverPanel(){
-        SoundController.instance.playSoundBreak();
-        SoundController.instance.playSoundGameOver();
+        SoundEffectController.instance.playSoundBreak();
+        SoundEffectController.instance.playSoundGameOver();
         this.showPanel(resultPanel, resultTitleText, "Gameover!");
     }
 
     public void showVictoryPanel(){
-        SoundController.instance.playSoundVictory();
+        SoundEffectController.instance.playSoundVictory();
         this.showPanel(resultPanel, resultTitleText, "Victory!");
     }
 
@@ -93,19 +89,19 @@ public class GameplayController : MonoBehaviour {
     }
     public void closeSettingPanel()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         settingPanel.SetActive(false);
     }
     public void showPanel(GameObject panel)
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         panel.SetActive(true);
         Time.timeScale = 0f;
     }
     /*Clicked Button*/
     public void clickPauseButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         menuPanel.SetActive(true);
@@ -113,24 +109,25 @@ public class GameplayController : MonoBehaviour {
     }
     public void clickResumeButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         menuPanel.SetActive(false);
-        Time.timeScale = this.gameSpeed;
+        CountDown.instance.startCountdown(3);
+        //Time.timeScale = 1;//this.gameSpeed;
     }
     public void clickRestartButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         SceneManager.LoadScene("Gameplay");
     }
 
     public void clickBackMenuButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         SceneManager.LoadScene("MainMenu");
     }
     public void clickExitButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         Application.Quit();
     }
 }

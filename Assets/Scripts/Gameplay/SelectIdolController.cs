@@ -5,7 +5,7 @@ public class SelectIdolController : MonoBehaviour {
     public GameObject SelectPanel, Countdowner;
     
     public void playNowClick(){
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         SelectPanel.SetActive(false);
         GameplayController.instance.restartGame();//start game
         //Instantiate(Countdowner, new Vector3(0,0,0), Quaternion.identity);

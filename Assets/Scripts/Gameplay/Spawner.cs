@@ -12,10 +12,13 @@ public class Spawner : MonoBehaviour {
         Vector3 bound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
 
         minX = -bound.x + 0.5f;
-        maxX = 2 * bound.y + minX - 0.8f;
+        maxX = 2 * bound.y + minX - 0.7f;
 
         StartCoroutine(SpawnerItem());
-	}
+		StartCoroutine(SpawnerItem());
+		StartCoroutine(SpawnerItem());
+        //StartCoroutine(SpawnerItem());
+    }
     
     IEnumerator SpawnerItem(){
         yield return new WaitForSeconds(Random.Range(0.2f, 5f - GameplayController.instance.gameSpeed));        
@@ -28,4 +31,5 @@ public class Spawner : MonoBehaviour {
         StartCoroutine(SpawnerItem());
 
     }
+	
 }

@@ -10,14 +10,14 @@ public class ResultController : MonoBehaviour {
 
     public void clickNextButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         index = (++index) % level;
         //Debug.Log("Next: " + index);
     }
 
     public void clickPrevButton()
     {
-        SoundController.instance.playSoundButtonClicked();
+        SoundEffectController.instance.playSoundButtonClicked();
         index = (--index + level) % level;//4-- = 3 + 10 = 13 
         //Debug.Log("Prev: " + index);
     }

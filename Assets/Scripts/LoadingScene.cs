@@ -20,9 +20,10 @@ public class LoadingScene : MonoBehaviour {
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / .9f);
-            Debug.Log("progress: " + progress);
+            //Debug.Log("progress: " + progress);
             slider.value = progress;
-            progressText.text = progress * 100f + "%";
+            progressText.text = Mathf.Round(progress * 100) + "%";
+			//Debug.Log("progress: " + progressText.text);
             yield return null;
         }
     }
