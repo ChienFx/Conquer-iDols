@@ -18,6 +18,9 @@ public class UIZoomImage : MonoBehaviour, IScrollHandler
     public void OnScroll(PointerEventData eventData)
     {
         var delta = Vector3.one * (eventData.scrollDelta.y * zoomSpeed);
+
+        Debug.Log("scrollDelta.y: " + eventData.scrollDelta.y);
+
         var desiredScale = transform.localScale + delta;
 
         desiredScale = ClampDesiredScale(desiredScale);

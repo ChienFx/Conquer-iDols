@@ -5,21 +5,17 @@ public class ResultController : MonoBehaviour {
 
     private int level, score, idolCode;
     private int index = 0;
-    // Use this for initialization
-    // Update is called once per frame
 
     public void clickNextButton()
     {
-        SoundEffectController.instance.playSoundButtonClicked();
+        SoundController.instance.playSoundButtonClicked();
         index = (++index) % level;
-        //Debug.Log("Next: " + index);
     }
 
     public void clickPrevButton()
     {
-        SoundEffectController.instance.playSoundButtonClicked();
+        SoundController.instance.playSoundButtonClicked();
         index = (--index + level) % level;//4-- = 3 + 10 = 13 
-        //Debug.Log("Prev: " + index);
     }
     void Update () {
         if(GameplayController.instance.resultPanel.active)
@@ -32,7 +28,6 @@ public class ResultController : MonoBehaviour {
             GameObject.Find("max_index").GetComponent<Text>().text = level.ToString();
             GameObject.Find("current_index").GetComponent<Text>().text = (index+1).ToString();
             GameObject.Find("ImageSlider").GetComponent<Image>().sprite = GameplayController.instance.spriteIdolArr[idolCode * 10 + index];
-        }
-        
+        }   
 	}
 }

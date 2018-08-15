@@ -1,40 +1,96 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 public class SoundController : MonoBehaviour {
+
     public Dropdown dropdown;
     public static SoundController instance;
-    public float volume = 0.8f;
+    public float backgroundVolume = 0.8f;
   
     public AudioClip[] listBackgroudMusic;
-    public Slider volumeSlider;
-    private AudioSource source;
-    
+    public Slider backgroundSlider;
+    public AudioSource backgroundSource;
+
+    //
+    public float soundEffectVolume = 0.3f;
+    public AudioClip adClickButton, adLevelUp, adScoreUp, adGameover, adVictory, adBreak;
+
+    public Slider soundEffectSlider;
+    public AudioSource soundEffectSource;
+
+    //
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
-        source = this.GetComponent<AudioSource>();
-        source.volume = this.volume;
-        volumeSlider.value = this.volume;
-        source.loop = true;
+       
+        backgroundSource.volume = this.backgroundVolume;
+        backgroundSlider.value = this.backgroundVolume;
+        backgroundSource.loop = true;
+
+      
+        soundEffectSource.volume = this.soundEffectVolume;
+        soundEffectSlider.value = this.soundEffectVolume;
+        soundEffectSource.loop = false;
+
     }
     public void playBackgroundMusic()
     {
-        if (source.isPlaying)
-            source.Stop();
-        source.PlayOneShot(listBackgroudMusic[dropdown.value]);
+        if (backgroundSource.isPlaying)
+            backgroundSource.Stop();
+        backgroundSource.PlayOneShot(listBackgroudMusic[dropdown.value]);
     }
     private void Update()
     {
-        if (!source.isPlaying)
+        if (!backgroundSource.isPlaying)
         {
             dropdown.value = Random.Range(0, listBackgroudMusic.Length);
             playBackgroundMusic();
         }
     }
-    public void OnValueChange(float vol)
+    public void OnValueChangeBackgroundVolume(float vol)
     {
-        this.volume = vol;
-        source.volume = this.volume;
+        this.backgroundVolume = backgroundSource.volume = backgroundSlider.value = vol;
     }
+    public void OnValueChangeBackgroundVolume()
+    {
+        this.backgroundVolume = backgroundSource.volume = backgroundSlider.value;
+    }
+
+    //Sound Effect methods
+    public void OnValueChangeSoundEffectVolume(float vol)
+    {
+        this.soundEffectVolume = soundEffectSource.volume = soundEffectSlider.value = vol;
+    }
+    public void OnValueChangeSoundEffectVolume()
+    {
+        this.soundEffectVolume = soundEffectSource.volume = soundEffectSlider.value;
+    }
+
+    public void playSoundButtonClicked()
+    {
+        soundEffectSource.PlayOneShot(adClickButton);
+    }
+
+    public void playSoundLevelUp()
+    {
+        soundEffectSource.PlayOneShot(adLevelUp);
+    }
+    public void playSoundScorelUp()
+    {
+        soundEffectSource.PlayOneShot(adScoreUp);
+    }
+    public void playSoundBreak()
+    {
+        soundEffectSource.PlayOneShot(adBreak);
+    }
+    public void playSoundGameOver()
+    {
+        soundEffectSource.PlayOneShot(adGameover);
+    }
+    public void playSoundVictory()
+    {
+        soundEffectSource.PlayOneShot(adVictory);
+    }
+
 }

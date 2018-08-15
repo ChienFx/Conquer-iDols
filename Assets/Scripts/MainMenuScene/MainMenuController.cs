@@ -7,11 +7,11 @@ public class MainMenuController : MonoBehaviour {
     private GameObject playButton, exitButton;
 
     public void clickPlayButton(){
-        SoundEffectController.instance.playSoundButtonClicked();
+        SoundController.instance.playSoundButtonClicked();
         SceneManager.LoadScene("Gameplay");
     }
     public void clickExitButton(){
-        SoundEffectController.instance.playSoundButtonClicked();
+        SoundController.instance.playSoundButtonClicked();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         Application.Quit();
     }

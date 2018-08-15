@@ -12,19 +12,12 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start(){
-        //Bound constraint
-       
         Vector3 bound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
         playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
         playerHeight = GetComponent<SpriteRenderer>().bounds.size.y;
-        Debug.Log("player size:" + playerWidth + ", " + playerHeight);
         minX = -bound.x; // -400
         maxX = 2*bound.y+ minX+0.3f;// + Screen.height; //80
-        
         lineY = -bound.y + playerHeight / 2;//fixed
-        
-        //Debug.Log("bound: " + minX + ", " + maxX+", "+lineY);
-
     }
 
     private void FixedUpdate(){
@@ -41,7 +34,7 @@ public class Player : MonoBehaviour {
             Cursor.visible = false;
 
         if (curPos.x - playerWidth / 2 < minX) curPos.x = minX + playerWidth / 2;
-        else if (curPos.x + playerWidth / 2 > maxX) curPos.x = maxX - playerWidth / 2;
+        //else if (curPos.x + playerWidth / 2 > maxX) curPos.x = maxX - playerWidth / 2;
         curPos.y = lineY;
         transform.position = curPos;
     }
